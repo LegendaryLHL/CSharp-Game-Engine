@@ -20,6 +20,7 @@ namespace GameEngine
 
         Vector2 LastPos = new Vector2(0, 0);
 
+        // Create two dimentional array to place sprite
         string[,] Map =
         {
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "." },
@@ -45,7 +46,6 @@ namespace GameEngine
             BackgroundColour = Color.White;
 
             CameraPositon.x = 120;
-
 
             for (int i = 0; i < Map.GetLength(1); i++)
             {
