@@ -13,13 +13,14 @@ namespace GameEngine
     {
         public Canvas()
         {
+            // Reduce flickering
             this.DoubleBuffered = true;
         }
     }
     public abstract class GameEngine
     {
         private Vector2 ScreenSize = new Vector2(512, 512);
-        private string Title = "with anime tities";
+        private string Title = "MyGame";
         private Canvas Window = null;
         private Thread GameLoopThread = null;
 
@@ -138,7 +139,7 @@ namespace GameEngine
                 }
                 catch
                 {
-                    //log info game is loading
+                    // Log info game is loading
                     Log.Info("Window has not loaded or is loading...");
                 }
             }
