@@ -10,8 +10,7 @@ namespace GameEngine
 {
     class DemoGame : GameEngine
     { 
-        Sprite2D Player;
-        Sprite2D GroundRef = new Sprite2D("Ground");
+        Sprite Player;
 
         bool left;
         bool right;
@@ -53,14 +52,15 @@ namespace GameEngine
                 {
                     if (Map[j, i] == "g")
                     {
-                        new Sprite2D(new Vector2(i * 50, j * 50), new Vector2(50, 50), GroundRef.Sprite, "ground");
+                        new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground");
                     }
                     if (Map[j, i] == "p")
                     {
-                        Player = new Sprite2D(new Vector2(i * 50, j * 50), new Vector2(50, 50), "Player", "player");
+                        Player = new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "Player", "player");
                     }
                 }
             }
+            new Button(new Vector2(50, 50), new Vector2(50, 50), "test", new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel), Color.Red, () => { Console.WriteLine("click"); }, "tag");
         }
         public override void OnDraw()
         {
@@ -137,32 +137,26 @@ namespace GameEngine
 
         public override void OnInitialise()
         {
-            //throw new NotImplementedException();
         }
 
         public override void GetKeyPress(KeyPressEventArgs e)
         {
-            //throw new NotImplementedException();
         }
 
         public override void GetMouseDown(MouseEventArgs e)
         {
-            //throw new NotImplementedException();
         }
 
         public override void GetMouseUp(MouseEventArgs e)
         {
-            //throw new NotImplementedException();
         }
 
         public override void GetMouseHover(EventArgs e)
         {
-            //throw new NotImplementedException();
         }
 
         public override void GetMouseMove(EventArgs e)
         {
-            //throw new NotImplementedException();
         }
     }
 }

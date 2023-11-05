@@ -6,7 +6,6 @@ C:\Users\User\Desktop\koko\tools\c#\code\project\GameEngine\obj\Debug\GameEngine
 C:\Users\User\Desktop\koko\tools\c#\code\project\GameEngine\obj\Debug\GameEngine.exe
 C:\Users\User\Desktop\koko\tools\c#\code\project\GameEngine\obj\Debug\GameEngine.pdb
 C:\Users\User\Desktop\koko\tools\cs\c#\project\GameEngine\obj\Debug\GameEngine.csproj.AssemblyReference.cache
-C:\Users\User\Desktop\koko\tools\cs\c#\project\GameEngine\obj\Debug\GameEngine.csproj.SuggestedBindingRedirects.cache
 C:\Users\User\Desktop\koko\tools\cs\c#\project\GameEngine\obj\Debug\GameEngine.csproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\koko\tools\cs\c#\project\GameEngine\obj\Debug\GameEngine.exe
 C:\Users\User\Desktop\koko\tools\cs\c#\project\GameEngine\obj\Debug\GameEngine.pdb
