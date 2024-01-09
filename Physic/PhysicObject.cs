@@ -42,27 +42,58 @@ namespace GameEngine
                     totalForce = totalForce.Add(force);
                 }
             }
-            Console.WriteLine(totalForce.y);
-            Velocity = Velocity.Add(totalForce.Divide(Mass).Multiply(GameEngine.DeltaTime));
+            Velocity = Velocity.Add(Motion.VelocityChangeFromForce(totalForce, this));
+        }
+
+        public PhysicObject closestObject()
+        {
+            if (AllPhysicObject.Count > 1)
+            {
+                PhysicObject closestObject = null;
+                float distScore = float.MaxValue;
+                foreach (var obj in AllPhysicObject)
+                {
+                    if (obj != this)
+                    {
+                        float dist = Motion.FindDistance(GraphicElement.Position, obj.GraphicElement.Position);
+                        
+                        if (dist < distScore)
+                        {
+                            distScore = dist;
+                            closestObject = obj;
+                        }
+                    }
+                }
+                return closestObject;
+            }
+            return null;
         }
 
         public bool hypotheticalCollision(Vector2 position)
         {
             if (AllPhysicObject.Count > 1) {
                 PhysicObject closestObject = null;
-                float distScore = 0;
+                float distScore = float.MaxValue;
                 foreach (var obj in AllPhysicObject)
                 {
-                    float dist = Motion.FindDistance(position, obj.GraphicElement.Position);
-                    if (dist > distScore)
+                    if (obj != this)
                     {
-                        distScore = dist;
-                        closestObject = obj;
+                        float dist = Motion.FindDistance(position, obj.GraphicElement.Position);
+                        
+                        if (dist < distScore)
+                        {
+                            distScore = dist;
+                            closestObject = obj;
+                        }
                     }
                 }
                 if (closestObject != null)
                 {
-                    if (position.x < closestObject.GraphicElement.Position.x + closestObject.GraphicElement.Scale.x &&
+                    if (GraphicElement.Tag == "player")
+                    {
+                        //Console.WriteLine(position.x < closestObject.GraphicElement.Position.x);
+                    }
+                        if (position.x < closestObject.GraphicElement.Position.x + closestObject.GraphicElement.Scale.x &&
                         position.x + GraphicElement.Scale.x > closestObject.GraphicElement.Position.x &&
                     position.y < closestObject.GraphicElement.Position.y + closestObject.GraphicElement.Scale.y &&
                         position.y + GraphicElement.Scale.y > closestObject.GraphicElement.Position.y)

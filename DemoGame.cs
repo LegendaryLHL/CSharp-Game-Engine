@@ -13,8 +13,6 @@ namespace GameEngine
     { 
         Sprite Player;
         PhysicObject PlayerObject;
-        PhysicObject Land;
-        Sprite SpecialLand;
 
         bool left;
         bool right;
@@ -56,7 +54,10 @@ namespace GameEngine
                 {
                     if (Map[j, i] == "g")
                     {
-                        SpecialLand = new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground");
+                        new PhysicObject(new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground"))
+                        {
+                            Mass = 3000000
+                        };
                     }
                     if (Map[j, i] == "p")
                     {
@@ -65,9 +66,6 @@ namespace GameEngine
                 }
             }
             new Button(new Vector2(50, 50), new Vector2(50, 50), "test", new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel), Color.Red, () => { Console.WriteLine("click"); }, "tag");
-
-            Land = new PhysicObject(SpecialLand);
-            Land.Mass = 100000000;
 
             PlayerObject = new PhysicObject(Player);
             PlayerObject.Mass = 100;
@@ -85,29 +83,19 @@ namespace GameEngine
         {
             if (up)
             {
-                Player.Position.y -= 2f;
+                PlayerObject.Velocity.y = 50f;
             }
             if (down)
             {
-                Player.Position.y += 2f;
+                PlayerObject.Velocity.y = -50f;
             }
             if (left)
             {
-                Player.Position.x -= 2f;
+                PlayerObject.Velocity.x = 50f;
             }
             if (right)
             {
-                Player.Position.x += 2f;
-            }
-            if (Player.IsColiding("ground"))
-            {
-                Player.Position.x = LastPos.x;
-                Player.Position.y = LastPos.y;
-            }
-            else
-            {
-                LastPos.x = Player.Position.x;
-                LastPos.y = Player.Position.y;
+                PlayerObject.Velocity.x = -50f;
             }
 
             PhysicObject.PhysicUpdate();

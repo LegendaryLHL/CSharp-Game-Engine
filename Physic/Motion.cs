@@ -12,7 +12,7 @@ namespace GameEngine
         public static Vector2 GravitationalAcceleration = new Vector2(0, 9.81f);
         //public static float G = 6.67430f * (float)Math.Pow(10, -11);
         // Amplify effects of gravity
-        public static float G = 6.67430f * (float)Math.Pow(10, -3);
+        public static float G = 6.67430f * (float)Math.Pow(10, -2);
 
         public static Vector2 GetDisplacement(Vector2 velocity, float time)
         {
@@ -41,6 +41,15 @@ namespace GameEngine
             {
                 obj.GraphicElement.Position = obj.GraphicElement.Position.Add(GetDisplacement(obj.Velocity, GameEngine.DeltaTime));
             }
+            else
+            {
+                obj.Velocity = Vector2.Zero();
+            }
+        }
+
+        public static Vector2 VelocityChangeFromForce(Vector2 totalForce, PhysicObject obj)
+        {
+            return totalForce.Divide(obj.Mass).Multiply(GameEngine.DeltaTime);
         }
     }
 }
