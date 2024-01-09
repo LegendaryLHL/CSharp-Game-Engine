@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GameEngine
 {
     class DemoGame : GameEngine
     { 
         Sprite Player;
+        PhysicObject PlayerObject;
+        PhysicObject Land;
+        Sprite SpecialLand;
 
         bool left;
         bool right;
@@ -52,7 +56,7 @@ namespace GameEngine
                 {
                     if (Map[j, i] == "g")
                     {
-                        new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground");
+                        SpecialLand = new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground");
                     }
                     if (Map[j, i] == "p")
                     {
@@ -61,6 +65,16 @@ namespace GameEngine
                 }
             }
             new Button(new Vector2(50, 50), new Vector2(50, 50), "test", new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel), Color.Red, () => { Console.WriteLine("click"); }, "tag");
+
+            Land = new PhysicObject(SpecialLand);
+            Land.Mass = 100000000;
+
+            PlayerObject = new PhysicObject(Player);
+            PlayerObject.Mass = 100;
+            PlayerObject.Update = () =>
+            {
+                PlayerObject.ApplyGravity();
+            };
         }
         public override void OnDraw()
         {
@@ -95,6 +109,8 @@ namespace GameEngine
                 LastPos.x = Player.Position.x;
                 LastPos.y = Player.Position.y;
             }
+
+            PhysicObject.PhysicUpdate();
         }
 
         public override void GetKeyDown(KeyEventArgs e)

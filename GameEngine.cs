@@ -29,6 +29,10 @@ namespace GameEngine
         public Vector2 CameraZoom = new Vector2(1, 1);
         public FormWindowState WindowStateSize = FormWindowState.Normal;
 
+
+        public static float DeltaTime = 0;
+        public static DateTime TimeNow = DateTime.Now;
+
         public GameEngine(Vector2 ScreenSize, string Title)
         {
             OnInitialise();
@@ -152,10 +156,14 @@ namespace GameEngine
                     Log.Error("An unexpected error occurred while loading: " + ex.Message);
                 }
                 */
-                    OnDraw();
-                    Window.BeginInvoke((MethodInvoker)delegate { Window.Refresh(); });
-                    OnUpdate();
-                    Thread.Sleep(2);
+                OnDraw();
+                Window.BeginInvoke((MethodInvoker)delegate { Window.Refresh(); });
+
+                DeltaTime = (float)(TimeNow - DateTime.Now).TotalSeconds;
+                TimeNow = DateTime.Now;
+                OnUpdate();
+
+                Thread.Sleep(2);
             }
         }
 
