@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GameEngine
@@ -20,10 +21,10 @@ namespace GameEngine
             {
                 if (e.Tag == tag)
                 {
-                    if (Cursor.Position.X < e.Position.x + e.Scale.x &&
-                        Cursor.Position.Y < e.Position.y + e.Scale.y &&
-                        Cursor.Position.X > e.Position.x &&
-                        Cursor.Position.Y > e.Position.y)
+                    if (GameEngine.CursorPosition.x < e.Position.x + e.Scale.x &&
+                        GameEngine.CursorPosition.y < e.Position.y + e.Scale.y &&
+                        GameEngine.CursorPosition.x > e.Position.x &&
+                        GameEngine.CursorPosition.y > e.Position.y)
                     {
                         return true;
                     }
@@ -33,10 +34,10 @@ namespace GameEngine
         }
         public bool IsCursorOnGraphicElement()
         {
-            return Cursor.Position.X < Position.x + Scale.x &&
-                        Cursor.Position.Y - 28 < Position.y + Scale.y &&
-                        Cursor.Position.X > Position.x &&
-                        Cursor.Position.Y - 28 > Position.y;
+            return      GameEngine.CursorPosition.x < Position.x + Scale.x &&
+                        GameEngine.CursorPosition.y < Position.y + Scale.y &&
+                        GameEngine.CursorPosition.x > Position.x &&
+                        GameEngine.CursorPosition.y > Position.y;
         }
 
         // tag is other element

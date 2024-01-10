@@ -153,6 +153,19 @@ namespace GameEngine
 
         public override void GetMouseUp(MouseEventArgs e)
         {
+            // Handle button
+            if (e.Button == MouseButtons.Left)
+            {
+                foreach (GraphicElement graphicElement in AllGraphicElements)
+                {
+                    if (graphicElement is Button && graphicElement.IsCursorOnGraphicElement())
+                    {
+                        Button button = (Button)graphicElement;
+                        button.RunAction();
+                        break;
+                    }
+                }
+            }
         }
 
         public override void GetMouseHover(EventArgs e)
@@ -161,6 +174,25 @@ namespace GameEngine
 
         public override void GetMouseMove(EventArgs e)
         {
+            // Handle button
+            foreach (GraphicElement graphicElement in AllGraphicElements)
+            {
+                // Not Hover
+                if (graphicElement is Button)
+                {
+                    Button button = (Button)graphicElement;
+                    if (graphicElement.IsCursorOnGraphicElement() && !button.IsHover)
+                    {
+                        button.IsHover = true;
+                        break;
+                    }
+                    else if (!graphicElement.IsCursorOnGraphicElement() && button.IsHover)
+                    {
+                        button.IsHover = false;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

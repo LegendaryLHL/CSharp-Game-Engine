@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GameEngine
 {
@@ -23,24 +24,26 @@ namespace GameEngine
 
         public static List<GraphicElement> AllGraphicElements = new List<GraphicElement> { };
 
-        public Color BackgroundColour = Color.White;
-        public Vector2 CameraPositon = new Vector2(0, 0);
-        public float CameraAngle = 0f;
-        public Vector2 CameraZoom = new Vector2(1, 1);
-        public FormWindowState WindowStateSize = FormWindowState.Normal;
+
+        public static Vector2 CursorPosition;
+        public static Color BackgroundColour = Color.White;
+        public static Vector2 CameraPositon = new Vector2(0, 0);
+        public static float CameraAngle = 0f;
+        public static Vector2 CameraZoom = new Vector2(1, 1);
+        public static FormWindowState WindowStateSize = FormWindowState.Normal;
 
 
         public static float DeltaTime = 0;
         public static DateTime TimeNow = DateTime.Now;
 
-        public GameEngine(Vector2 ScreenSize, string Title)
+        public GameEngine(Vector2 screenSize, string title)
         {
             OnInitialise();
-            this.ScreenSize = ScreenSize;
-            this.Title = Title;
+            ScreenSize = screenSize;
+            Title = title;
             Window = new Canvas();
             Window.Size = new Size((int)ScreenSize.x, (int)ScreenSize.y);
-            Window.Text = this.Title;
+            Window.Text = Title;
             Window.Paint += Renderer;
             Window.KeyDown += Window_KeyDown;
             Window.KeyUp += Window_KeyUP;
@@ -59,25 +62,8 @@ namespace GameEngine
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            // Handle button
-            foreach (GraphicElement graphicElement in AllGraphicElements)
-            {
-                // Not Hover
-                if (graphicElement is Button)
-                {
-                    Button button = (Button)graphicElement;
-                    if (graphicElement.IsCursorOnGraphicElement() && !button.IsHover)
-                    {
-                        button.IsHover = true;
-                        break;
-                    }
-                    else if (!graphicElement.IsCursorOnGraphicElement() && button.IsHover)
-                    {
-                        button.IsHover = false;
-                        break;
-                    }
-                }
-            }
+            // Offset if needed
+            CursorPosition = new Vector2(Window.PointToClient(Cursor.Position).X - CameraPositon.x, Window.PointToClient(Cursor.Position).Y - CameraPositon.y);
             GetMouseMove(e);
         }
 
@@ -88,19 +74,6 @@ namespace GameEngine
 
         private void Window_MouseUp(object sender, MouseEventArgs e)
         {
-            // Handle button
-            if (e.Button == MouseButtons.Left)
-            {
-                foreach (GraphicElement graphicElement in AllGraphicElements)
-                {
-                    if (graphicElement is Button && graphicElement.IsCursorOnGraphicElement())
-                    {
-                        Button button = (Button)graphicElement;
-                        button.RunAction();
-                        break;
-                    }
-                }
-            }
             GetMouseUp(e);
         }
 
