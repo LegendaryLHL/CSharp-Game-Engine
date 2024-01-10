@@ -132,7 +132,7 @@ namespace GameEngine
                 OnDraw();
                 Window.BeginInvoke((MethodInvoker)delegate { Window.Refresh(); });
 
-                DeltaTime = (float)(TimeNow - DateTime.Now).TotalSeconds;
+                DeltaTime = (float)(DateTime.Now - TimeNow).TotalSeconds;
                 TimeNow = DateTime.Now;
                 OnUpdate();
 

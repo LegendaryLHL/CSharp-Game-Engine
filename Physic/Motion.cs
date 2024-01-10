@@ -16,7 +16,7 @@ namespace GameEngine
 
         public static Vector2 GetDisplacement(Vector2 velocity, float time)
         {
-            return new Vector2(velocity.x * time, velocity.y * time);
+            return velocity.Multiply(time);
         }
 
         public static Vector2 FindGravity(PhysicObject self, PhysicObject other)

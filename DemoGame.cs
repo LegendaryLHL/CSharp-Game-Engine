@@ -56,7 +56,7 @@ namespace GameEngine
                     {
                         new PhysicObject(new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground"))
                         {
-                            Mass = 3000000
+                            Mass = 30000000
                         };
                     }
                     if (Map[j, i] == "p")
@@ -65,13 +65,13 @@ namespace GameEngine
                     }
                 }
             }
-            new Button(new Vector2(50, 50), new Vector2(50, 50), "test", new Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel), Color.Red, () => { Console.WriteLine("click"); }, "tag");
 
             PlayerObject = new PhysicObject(Player);
-            PlayerObject.Mass = 100;
+            PlayerObject.Mass = 200;
             PlayerObject.Update = () =>
             {
                 PlayerObject.ApplyGravity();
+                PlayerObject.ApplyAirResistance(1000.0f);
             };
         }
         public override void OnDraw()
@@ -83,19 +83,19 @@ namespace GameEngine
         {
             if (up)
             {
-                PlayerObject.Velocity.y = 50f;
+                PlayerObject.Velocity.y = -100f;
             }
             if (down)
             {
-                PlayerObject.Velocity.y = -50f;
+                PlayerObject.Velocity.y = 100f;
             }
             if (left)
             {
-                PlayerObject.Velocity.x = 50f;
+                PlayerObject.Velocity.x = -100f;
             }
             if (right)
             {
-                PlayerObject.Velocity.x = -50f;
+                PlayerObject.Velocity.x = 100f;
             }
 
             PhysicObject.PhysicUpdate();

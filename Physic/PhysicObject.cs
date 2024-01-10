@@ -45,6 +45,15 @@ namespace GameEngine
             Velocity = Velocity.Add(Motion.VelocityChangeFromForce(totalForce, this));
         }
 
+        public void ApplyAirResistance(float k)
+        {
+            // Calculate the air resistance force
+            Vector2 airResistance = Velocity.Multiply(-k);
+
+            Velocity = Velocity.Add(Motion.VelocityChangeFromForce(airResistance, this));
+        }
+
+
         public PhysicObject closestObject()
         {
             if (AllPhysicObject.Count > 1)
