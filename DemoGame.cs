@@ -31,7 +31,7 @@ namespace GameEngine
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "." },
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "." },
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "." },
-            {".", "g", "g", "g", "g", "g", ".", ".", ".", ".", ".", "." },
+            {".", "g", ".", ".", "g", ".", ".", ".", ".", ".", ".", "." },
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "." },
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "." },
             {".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "." },
@@ -40,7 +40,7 @@ namespace GameEngine
 
         };
 
-        public DemoGame() : base(new Vector2(615, 512), ("demo")) { }
+        public DemoGame() : base(new Vector2(1015, 625), ("demo")) { }
 
         public override void OnLoad()
         {
@@ -48,15 +48,20 @@ namespace GameEngine
 
             CameraPositon.x = 120;
 
+            Motion.ScaleGravity(12);
+
             for (int i = 0; i < Map.GetLength(1); i++)
             {
                 for (int j = 0; j < Map.GetLength(0); j++)
                 {
                     if (Map[j, i] == "g")
                     {
-                        new PhysicObject(new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground"))
+                        PhysicObject ground = new PhysicObject(new Sprite(new Vector2(i * 50, j * 50), new Vector2(50, 50), "ground", "ground"));
+                        ground.Mass = 3000;
+                        ground.Update = () =>
                         {
-                            Mass = 30000000
+                            ground.ApplyGravity();
+                            ground.ApplyAirResistance(10000.0f);
                         };
                     }
                     if (Map[j, i] == "p")
@@ -67,11 +72,11 @@ namespace GameEngine
             }
 
             PlayerObject = new PhysicObject(Player);
-            PlayerObject.Mass = 200;
+            PlayerObject.Mass = 4000;
             PlayerObject.Update = () =>
             {
                 PlayerObject.ApplyGravity();
-                PlayerObject.ApplyAirResistance(1000.0f);
+                PlayerObject.ApplyAirResistance(10000.0f);
             };
         }
         public override void OnDraw()

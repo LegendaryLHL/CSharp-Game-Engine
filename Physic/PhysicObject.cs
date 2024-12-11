@@ -78,7 +78,7 @@ namespace GameEngine
             return null;
         }
 
-        public bool hypotheticalCollision(Vector2 position)
+        public PhysicObject hypotheticalCollision(Vector2 position)
         {
             if (AllPhysicObject.Count > 1) {
                 PhysicObject closestObject = null;
@@ -107,11 +107,11 @@ namespace GameEngine
                     position.y < closestObject.GraphicElement.Position.y + closestObject.GraphicElement.Scale.y &&
                         position.y + GraphicElement.Scale.y > closestObject.GraphicElement.Position.y)
                     {
-                        return true;
+                        return closestObject;
                     }
                 }
             }
-                return false;
+                return null;
         }
     }
 }

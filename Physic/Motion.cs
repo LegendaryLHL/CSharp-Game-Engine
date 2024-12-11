@@ -9,10 +9,11 @@ namespace GameEngine
 {
     public class Motion
     {
-        public static Vector2 GravitationalAcceleration = new Vector2(0, 9.81f);
-        //public static float G = 6.67430f * (float)Math.Pow(10, -11);
-        // Amplify effects of gravity
-        public static float G = 6.67430f * (float)Math.Pow(10, -2);
+        public static float G = 6.67430f * (float)Math.Pow(10, -11);
+        public static void ScaleGravity(int scale)
+        {
+            G *= (float)Math.Pow(10, scale);
+        }
 
         public static Vector2 GetDisplacement(Vector2 velocity, float time)
         {
@@ -37,14 +38,25 @@ namespace GameEngine
         }
         public static void Move(PhysicObject obj)
         {
-            if (!obj.hypotheticalCollision(obj.GraphicElement.Position.Add(GetDisplacement(obj.Velocity, GameEngine.DeltaTime))))
+            Vector2 displacement = GetDisplacement(obj.Velocity, GameEngine.DeltaTime);
+            PhysicObject collidingObj = obj.hypotheticalCollision(obj.GraphicElement.Position.Add(displacement));
+            if (collidingObj != null)
             {
-                obj.GraphicElement.Position = obj.GraphicElement.Position.Add(GetDisplacement(obj.Velocity, GameEngine.DeltaTime));
+                handleObjCollision(obj, collidingObj);
             }
-            else
-            {
-                obj.Velocity = Vector2.Zero();
-            }
+            displacement = GetDisplacement(obj.Velocity, GameEngine.DeltaTime);
+            obj.GraphicElement.Position = obj.GraphicElement.Position.Add(displacement);
+        }
+
+        public static void handleObjCollision(PhysicObject obj1, PhysicObject obj2)
+        {
+            obj1.Velocity = CollisionVelocity(obj1.Mass, obj2.Mass, obj1.Velocity, obj2.Velocity);
+            obj2.Velocity = CollisionVelocity(obj2.Mass, obj1.Mass, obj2.Velocity, obj1.Velocity);
+        }
+
+        public static Vector2 CollisionVelocity(float m1, float m2, Vector2 v1, Vector2 v2)
+        {
+            return v1.Multiply(m1 - m2).Add(v2.Multiply(2 * m2)).Divide(m1 + m2);
         }
 
         public static Vector2 VelocityChangeFromForce(Vector2 totalForce, PhysicObject obj)
